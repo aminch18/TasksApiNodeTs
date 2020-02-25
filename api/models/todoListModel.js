@@ -1,10 +1,10 @@
-var mongoose = require(mongoose);
+var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var taskSchema = new Schema({
     name:{
         type: String,
-        required
+        required: 'Kindly enter the name of the task'
     },
     Created_date: {
     type: Date,
@@ -19,4 +19,4 @@ var taskSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model('Task', TaskSchema);
+module.exports = mongoose.model('Task', taskSchema);
