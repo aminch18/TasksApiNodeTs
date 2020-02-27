@@ -5,13 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "tsc": "tsc"
   },
   "author": "Amin",
   "license": "ISC",
   "dependencies": {
+    "@types/express": "^4.17.2",
     "express": "^4.17.1",
     "mongoose": "^5.9.2",
-    "nodemon": "^2.0.2"
+    "nodemon": "^2.0.2",
+    "typescript": "^3.8.2"
   }
 }
