@@ -20,7 +20,7 @@ class App {
 
     private setRoutes(controllers: { forEach : (arg0: (controller:any) => void) => void }): void {
         controllers.forEach(controller => {
-            this.app.use('/', controller.router);
+            this.app.use(controller.router);
         });
     }
 

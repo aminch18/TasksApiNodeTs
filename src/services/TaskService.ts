@@ -1,20 +1,49 @@
-import ITodoService from "../interfaces/ITodoService";
 import TaskModel from "../models/TaskModel";
+import ITaskService from "../interfaces/ITaskService";
+import { Request, Response } from 'express';
+import ITaskModel from "../interfaces/ITodoModel";
 
-class TodoService implements ITodoService
+class TaskService implements ITaskService
 {
-    public getTask = (): Promise<any> => new Promise( (resolve,reject) => 
-    {
-        TaskModel.find({}, (response, error) => {
-            error ? reject(error) : resolve(response);
-        });
-    })
 
-    public getTasks = (): Promise<any> => new Promise((resolve, reject) => {
-        TaskModel.findById({}, (response, error) => {
-            error ? reject(error) : resolve(response);
-        });
-    })
+    public createTask = (req:Request, resp:Response): Promise<ITaskModel> => new Promise ( 
+        (resolve:any, reject:any) => { 
+            const newTask = new TaskModel(req.body);
+            newTask.save((error, task) => {
+                error ? reject(error) : resolve(task);
+            });
+        }
+    );
 
+    public getTask = (req: Request, resp:Response): Promise<ITaskModel> => new Promise ( 
+        (resolve:any, reject:any) => {
+            TaskModel.findById(req.params.taskId, (response, error) => {
+                error ? reject(error) : resolve(response);
+        });
+    });
+
+    public getAllTasks = (req: Request, resp:Response): Promise<ITaskModel> => new Promise (
+        (resolve:any, reject:any) => {
+            TaskModel.find({}, (response, error) => {
+                error ? reject(error) : resolve(response);
+        });
+    });
+
+
+    public updateTask = (req: Request, resp:Response): Promise<ITaskModel> => new Promise(
+        (resolve:any, reject:any) => {
+            TaskModel.findByIdAndUpdate(req.params.taskId, req.body, (response, error) => {
+                error ? reject(error) : resolve(response);
+        });
+    });
+
+    public deleteTask = (req: Request, resp:Response): Promise<boolean> => new Promise(
+        (resolve:any, reject:any) => {
+            TaskModel.findByIdAndDelete(req.params.taskId, (response, error) => {
+                error ? reject(error) : resolve(response);
+        });
+    });
 
 }
+
+export default TaskService;
