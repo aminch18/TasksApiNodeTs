@@ -13,14 +13,15 @@ class TaskController implements IControllerBase
     public initRoutes() :void {
         console.log("Init routes")
         this.router.get('/', this.getTasks);
-        this.router.get('/task/', this.getTasks);
+        this.router.get('/task/:taskId', this.getTasks);
         this.router.post('/create', this.createTask)
-        
+        this.router.post('/update/:taskId', this.createTask)
+        this.router.post('/remove/:taskId', this.createTask)
     }
 
 
     public getTasks = async (req:Request, resp:Response, next: NextFunction) =>  {
-        console.log("Getting task")
+        console.log("Getting tasks")
         let taskService = new TaskService();
         try
         {
@@ -40,7 +41,6 @@ class TaskController implements IControllerBase
         try
         {
             var task = await taskService.getTask(req, resp);
-            console.log(task);
             resp.json(task);
         }
         catch(error)

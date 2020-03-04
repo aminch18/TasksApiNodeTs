@@ -10,7 +10,7 @@ var Server = /** @class */ (function () {
         var _this = this;
         this.port = 3000;
         this.initConfig = function () {
-            mongoose_1.default.connect('mongodb://localhost/TasksDb', { useNewUrlParser: true, useUnifiedTopology: true, autoIndex: false })
+            mongoose_1.default.connect('mongodb://localhost/dataBaseTasks', { useNewUrlParser: true, useUnifiedTopology: true, autoIndex: false })
                 .then(function () {
                 console.log('MongoDB is connected');
             })

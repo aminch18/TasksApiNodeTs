@@ -11,7 +11,7 @@ class Server {
     }
 
     private initConfig = ():void => {
-        mongoose.connect('mongodb://localhost/TasksDb', { useNewUrlParser: true, useUnifiedTopology: true, autoIndex: false })
+        mongoose.connect('mongodb://localhost/dataBaseTasks', { useNewUrlParser: true, useUnifiedTopology: true, autoIndex: false })
         .then( () => {
             console.log('MongoDB is connected');
           })

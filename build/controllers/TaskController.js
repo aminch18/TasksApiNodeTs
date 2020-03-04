@@ -50,7 +50,7 @@ var TaskController = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log("Getting task");
+                        console.log("Getting tasks");
                         taskService = new TaskService_1.default();
                         _a.label = 1;
                     case 1:
@@ -82,7 +82,6 @@ var TaskController = /** @class */ (function () {
                         return [4 /*yield*/, taskService.getTask(req, resp)];
                     case 2:
                         task = _a.sent();
-                        console.log(task);
                         resp.json(task);
                         return [3 /*break*/, 4];
                     case 3:
@@ -169,8 +168,10 @@ var TaskController = /** @class */ (function () {
     TaskController.prototype.initRoutes = function () {
         console.log("Init routes");
         this.router.get('/', this.getTasks);
-        this.router.get('/task/', this.getTasks);
+        this.router.get('/task/:taskId', this.getTasks);
         this.router.post('/create', this.createTask);
+        this.router.post('/update/:taskId', this.createTask);
+        this.router.post('/remove/:taskId', this.createTask);
     };
     return TaskController;
 }());

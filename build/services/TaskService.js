@@ -8,6 +8,7 @@ var TaskService = /** @class */ (function () {
     function TaskService() {
         this.createTask = function (req, resp) { return new Promise(function (resolve, reject) {
             var newTask = new TaskModel_1.default(req.body);
+            console.log(newTask);
             newTask.save(function (error, task) {
                 error ? reject(error) : resolve(task);
             });
@@ -15,12 +16,19 @@ var TaskService = /** @class */ (function () {
         this.getTask = function (req, resp) { return new Promise(function (resolve, reject) {
             TaskModel_1.default.findById(req.params.taskId, function (response, error) {
                 error ? reject(error) : resolve(response);
-            }).lean();
+            });
         }); };
         this.getAllTasks = function (req, resp) { return new Promise(function (resolve, reject) {
             TaskModel_1.default.find({}, function (response, error) {
-                error ? reject(error) : resolve(response);
-            }).lean();
+                // error ? reject(error) : resolve(response);
+                if (error) {
+                    reject(error);
+                }
+                else {
+                    console.log(response);
+                    resolve(response);
+                }
+            });
         }); };
         this.updateTask = function (req, resp) { return new Promise(function (resolve, reject) {
             TaskModel_1.default.findByIdAndUpdate(req.params.taskId, req.body, function (response, error) {
