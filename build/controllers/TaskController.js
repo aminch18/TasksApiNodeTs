@@ -67,9 +67,32 @@ var TaskController = /** @class */ (function () {
                 }
             });
         }); };
+        this.createTask = function (req, resp, next) { return __awaiter(_this, void 0, void 0, function () {
+            var taskService, task, error_2;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        taskService = new TaskService_1.default();
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, taskService.createTask(req, resp)];
+                    case 2:
+                        task = _a.sent();
+                        resp.json(task);
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_2 = _a.sent();
+                        next(error_2);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        }); };
         this.initRoutes();
     }
     TaskController.prototype.initRoutes = function () {
+        this.router.post('/create', this.createTask);
         this.router.get('/task', this.getTask);
     };
     return TaskController;

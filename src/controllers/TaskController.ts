@@ -11,7 +11,8 @@ class TaskController implements IControllerBase
     }
 
     public initRoutes() :void {
-         this.router.get('/task', this.getTask);
+        this.router.post('/create', this.createTask)
+        this.router.get('/task', this.getTask);
     }
 
     public getTask = async (req:Request, resp:Response, next: NextFunction) =>  {
@@ -19,6 +20,19 @@ class TaskController implements IControllerBase
         try
         {
             var task = await taskService.getTask(req, resp);
+            resp.json(task);
+        }
+        catch(error)
+        {
+            next(error);
+        }
+    }
+
+    public createTask = async (req:Request, resp:Response, next: NextFunction) => {
+        let taskService = new TaskService();
+        try
+        {
+            var task = await taskService.createTask(req, resp);
             resp.json(task);
         }
         catch(error)
