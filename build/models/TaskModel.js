@@ -9,8 +9,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose_1 = __importStar(require("mongoose"));
 var TaskSchema = new mongoose_1.Schema({
-    name: { type: String, required: true, unique: true },
-    assignedTo: { type: String, required: true, unique: true },
-    priority: { type: Number, required: true, unique: true },
+    id: { type: Number, required: true, autoIndex: true },
+    name: { type: String, required: true, autoIndex: false },
+    assignedTo: { type: String, required: true, autoIndex: false },
+    priority: { type: Number, required: true, autoIndex: false },
 });
 exports.default = mongoose_1.default.model('Task', TaskSchema);

@@ -45,18 +45,20 @@ var TaskController = /** @class */ (function () {
     function TaskController() {
         var _this = this;
         this.router = express_1.default.Router();
-        this.getTask = function (req, resp, next) { return __awaiter(_this, void 0, void 0, function () {
+        this.getTasks = function (req, resp, next) { return __awaiter(_this, void 0, void 0, function () {
             var taskService, task, error_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        console.log("Getting task");
                         taskService = new TaskService_1.default();
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, taskService.getTask(req, resp)];
+                        return [4 /*yield*/, taskService.getAllTasks(req, resp)];
                     case 2:
                         task = _a.sent();
+                        console.log(task);
                         resp.json(task);
                         return [3 /*break*/, 4];
                     case 3:
@@ -67,18 +69,20 @@ var TaskController = /** @class */ (function () {
                 }
             });
         }); };
-        this.createTask = function (req, resp, next) { return __awaiter(_this, void 0, void 0, function () {
+        this.getTask = function (req, resp, next) { return __awaiter(_this, void 0, void 0, function () {
             var taskService, task, error_2;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        console.log("Getting task");
                         taskService = new TaskService_1.default();
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, taskService.createTask(req, resp)];
+                        return [4 /*yield*/, taskService.getTask(req, resp)];
                     case 2:
                         task = _a.sent();
+                        console.log(task);
                         resp.json(task);
                         return [3 /*break*/, 4];
                     case 3:
@@ -89,11 +93,84 @@ var TaskController = /** @class */ (function () {
                 }
             });
         }); };
+        this.createTask = function (req, resp, next) { return __awaiter(_this, void 0, void 0, function () {
+            var taskService, task, error_3;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        console.log("Creating task");
+                        taskService = new TaskService_1.default();
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, taskService.createTask(req, resp)];
+                    case 2:
+                        task = _a.sent();
+                        console.log(task);
+                        resp.json(task);
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_3 = _a.sent();
+                        next(error_3);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        }); };
+        this.updateTask = function (req, resp, next) { return __awaiter(_this, void 0, void 0, function () {
+            var taskService, task, error_4;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        taskService = new TaskService_1.default();
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, taskService.updateTask(req, resp)];
+                    case 2:
+                        task = _a.sent();
+                        console.log(task);
+                        resp.json(task);
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_4 = _a.sent();
+                        next(error_4);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        }); };
+        this.deleteTask = function (req, resp, next) { return __awaiter(_this, void 0, void 0, function () {
+            var taskService, task, error_5;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        taskService = new TaskService_1.default();
+                        _a.label = 1;
+                    case 1:
+                        _a.trys.push([1, 3, , 4]);
+                        return [4 /*yield*/, taskService.deleteTask(req, resp)];
+                    case 2:
+                        task = _a.sent();
+                        console.log(task);
+                        resp.status(200);
+                        resp.send(true);
+                        return [3 /*break*/, 4];
+                    case 3:
+                        error_5 = _a.sent();
+                        next(error_5);
+                        return [3 /*break*/, 4];
+                    case 4: return [2 /*return*/];
+                }
+            });
+        }); };
         this.initRoutes();
     }
     TaskController.prototype.initRoutes = function () {
+        console.log("Init routes");
+        this.router.get('/', this.getTasks);
+        this.router.get('/task/', this.getTasks);
         this.router.post('/create', this.createTask);
-        this.router.get('/task', this.getTask);
     };
     return TaskController;
 }());

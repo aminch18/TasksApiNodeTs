@@ -15,12 +15,12 @@ var TaskService = /** @class */ (function () {
         this.getTask = function (req, resp) { return new Promise(function (resolve, reject) {
             TaskModel_1.default.findById(req.params.taskId, function (response, error) {
                 error ? reject(error) : resolve(response);
-            });
+            }).lean();
         }); };
         this.getAllTasks = function (req, resp) { return new Promise(function (resolve, reject) {
             TaskModel_1.default.find({}, function (response, error) {
                 error ? reject(error) : resolve(response);
-            });
+            }).lean();
         }); };
         this.updateTask = function (req, resp) { return new Promise(function (resolve, reject) {
             TaskModel_1.default.findByIdAndUpdate(req.params.taskId, req.body, function (response, error) {

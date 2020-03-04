@@ -20,6 +20,7 @@ class App {
 
     private setRoutes(controllers: { forEach : (arg0: (controller:any) => void) => void }): void {
         controllers.forEach(controller => {
+            console.log("Adding controller")
             this.app.use(controller.router);
         });
     }

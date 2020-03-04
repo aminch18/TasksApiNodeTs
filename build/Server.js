@@ -13,7 +13,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var App_1 = __importDefault(require("./App"));
 var bodyParser = __importStar(require("body-parser"));
 var TaskController_1 = __importDefault(require("./controllers/TaskController"));
+var mongoose_1 = __importDefault(require("mongoose"));
 // import loggerMiddleware from './middleware/logger'
+mongoose_1.default.Promise = global.Promise;
+mongoose_1.default.connect('mongodb://localhost/TasksDb', { useNewUrlParser: true, useUnifiedTopology: true });
 var app = new App_1.default({
     port: 3000,
     controllers: [
@@ -25,3 +28,25 @@ var app = new App_1.default({
     ]
 });
 app.listen();
+var Server = /** @class */ (function () {
+    function Server(app, config, taskController) {
+        var _this = this;
+        this.port = 3000;
+        this.taskController = new TaskController_1.default();
+        this.initApp = function (app, config) {
+            app = new App_1.default({
+                port: _this.port,
+                controllers: [
+                    _this.taskController
+                ],
+                middleWares: [
+                    bodyParser.json(),
+                    bodyParser.urlencoded({ extended: true })
+                ]
+            });
+            app.listen();
+        };
+        this.initApp(app, config);
+    }
+    return Server;
+}());

@@ -19,14 +19,14 @@ class TaskService implements ITaskService
         (resolve:any, reject:any) => {
             TaskModel.findById(req.params.taskId, (response, error) => {
                 error ? reject(error) : resolve(response);
-        });
+        }).lean();
     });
 
     public getAllTasks = (req: Request, resp:Response): Promise<ITaskModel> => new Promise (
         (resolve:any, reject:any) => {
             TaskModel.find({}, (response, error) => {
                 error ? reject(error) : resolve(response);
-        });
+        }).lean();
     });
 
 
