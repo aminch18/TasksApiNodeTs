@@ -50,15 +50,13 @@ var TaskController = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log("Getting tasks");
                         taskService = new TaskService_1.default();
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, taskService.getAllTasks(req, resp)];
+                        return [4 /*yield*/, taskService.getAllTasks()];
                     case 2:
                         task = _a.sent();
-                        console.log(task);
                         resp.json(task);
                         return [3 /*break*/, 4];
                     case 3:
@@ -74,18 +72,21 @@ var TaskController = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log("Getting task");
                         taskService = new TaskService_1.default();
+                        console.log("getting task");
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, taskService.getTask(req, resp)];
+                        console.log(req.params.taskId);
+                        return [4 /*yield*/, taskService.getTask(req)];
                     case 2:
                         task = _a.sent();
+                        console.log(task);
                         resp.json(task);
                         return [3 /*break*/, 4];
                     case 3:
                         error_2 = _a.sent();
+                        console.log(error_2);
                         next(error_2);
                         return [3 /*break*/, 4];
                     case 4: return [2 /*return*/];
@@ -97,16 +98,14 @@ var TaskController = /** @class */ (function () {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        console.log("Creating task");
                         taskService = new TaskService_1.default();
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, taskService.createTask(req, resp)];
+                        return [4 /*yield*/, taskService.createTask(req)];
                     case 2:
                         task = _a.sent();
-                        console.log(task);
-                        resp.json(task);
+                        resp.send(task);
                         return [3 /*break*/, 4];
                     case 3:
                         error_3 = _a.sent();
@@ -125,11 +124,13 @@ var TaskController = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, taskService.updateTask(req, resp)];
+                        return [4 /*yield*/, taskService.updateTask(req)];
                     case 2:
                         task = _a.sent();
-                        console.log(task);
-                        resp.json(task);
+                        if (task == null) {
+                            resp.status(400).send("Something went wrong");
+                        }
+                        resp.status(200).json(task);
                         return [3 /*break*/, 4];
                     case 3:
                         error_4 = _a.sent();
@@ -148,12 +149,13 @@ var TaskController = /** @class */ (function () {
                         _a.label = 1;
                     case 1:
                         _a.trys.push([1, 3, , 4]);
-                        return [4 /*yield*/, taskService.deleteTask(req, resp)];
+                        return [4 /*yield*/, taskService.deleteTaskById(req)];
                     case 2:
                         task = _a.sent();
-                        console.log(task);
-                        resp.status(200);
-                        resp.send(true);
+                        if (task == null) {
+                            resp.status(400).send("Something went wrong");
+                        }
+                        resp.status(200).json({ task: task, message: "This task has been deleted succesfully" });
                         return [3 /*break*/, 4];
                     case 3:
                         error_5 = _a.sent();
@@ -168,10 +170,10 @@ var TaskController = /** @class */ (function () {
     TaskController.prototype.initRoutes = function () {
         console.log("Init routes");
         this.router.get('/', this.getTasks);
-        this.router.get('/task/:taskId', this.getTasks);
+        this.router.get('/task/:taskId', this.getTask);
         this.router.post('/create', this.createTask);
-        this.router.post('/update/:taskId', this.createTask);
-        this.router.post('/remove/:taskId', this.createTask);
+        this.router.put('/update/:taskId', this.updateTask);
+        this.router.delete('/remove/:taskId', this.deleteTask);
     };
     return TaskController;
 }());

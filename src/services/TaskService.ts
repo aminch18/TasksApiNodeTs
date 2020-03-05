@@ -1,57 +1,50 @@
 import TaskModel from "../models/TaskModel";
 import ITaskService from "../interfaces/ITaskService";
-import { Request, Response } from 'express';
+import { Request } from 'express';
 import ITaskModel from "../interfaces/ITodoModel";
 
 class TaskService implements ITaskService
 {
 
-    public createTask = (req:Request, resp:Response): Promise<ITaskModel> => new Promise ( 
-        (resolve:any, reject:any) => { 
-            const newTask = new TaskModel(req.body);
-            console.log(newTask);
-            newTask.save((error, task) => {
-                error ? reject(error) : resolve(task);
-            });
-        }
-    );
+    public createTask = (req:Request): Promise<ITaskModel> => new TaskModel(req.body).save().then(task => task).catch(error => error);
 
-    public getTask = (req: Request, resp:Response): Promise<ITaskModel> => new Promise ( 
-        (resolve:any, reject:any) => {
-            TaskModel.findById(req.params.taskId, (response, error) => {
-                error ? reject(error) : resolve(response);
-        });
-    });
+    public getTask = (req: Request): Promise<ITaskModel | null> => TaskModel.findOne({taskId: req.params.taskId }).exec();
+        
+    public getAllTasks = (): Promise<ITaskModel[]> => TaskModel.find({}).exec();
 
-    public getAllTasks = (req: Request, resp:Response): Promise<Array<ITaskModel>> => new Promise (
-        (resolve:any, reject:any) => {
-            TaskModel.find({}, (response, error) => {
-                // error ? reject(error) : resolve(response);
-                if (error){
-                    reject(error)
-                }
-                else{
-                   console.log(response)
-                   resolve(response);
-               }
-        });
-    });
+    public updateTask = (req: Request): Promise<ITaskModel | null> => TaskModel.findOneAndUpdate({taskId: req.params.taskId }, req.body).exec();
 
+    public deleteTaskById = (req: Request): Promise<ITaskModel | null> => TaskModel.findOneAndDelete({id: req.params.id }).exec();
 
-    public updateTask = (req: Request, resp:Response): Promise<ITaskModel> => new Promise(
-        (resolve:any, reject:any) => {
-            TaskModel.findByIdAndUpdate(req.params.taskId, req.body, (response, error) => {
-                error ? reject(error) : resolve(response);
-        });
-    });
-
-    public deleteTask = (req: Request, resp:Response): Promise<boolean> => new Promise(
-        (resolve:any, reject:any) => {
-            TaskModel.findByIdAndDelete(req.params.taskId, (response, error) => {
-                error ? reject(error) : resolve(response);
-        });
-    });
-
-}
+}    
 
 export default TaskService;
+
+
+// //public deleteTaskByTaskId = (req: Request): Promise<ITaskModel | null> => TaskModel.findOneAndDelete({taskId: req.params.taskId }).exec();
+
+// public deleteTaskByTaskId = (id: string): Promise<ITaskModel | null> => TaskModel.findOneAndDelete({taskId: id }).exec();
+    // public deleteAllTasks = async (req:Request, resp:Response, next: NextFunction) => {
+    //     let taskService = new TaskService();
+    //     try
+    //     {
+    //         var tasks = await taskService.getAllTasks();
+    //         let deletedTasks: Array<ITaskModel | null> = [];
+    //         tasks.map(async (task) => 
+    //         {
+    //             console.log(task);
+    //             const deletedTask = await taskService.deleteTaskByTaskId(task.taskId);
+    //             console.log(deletedTask);
+    //         });
+
+    //         if(deletedTasks == null){
+    //             resp.status(400).send("Something went wrong");
+    //         }
+    //         resp.status(200).json({deletedTasks, message:"This tasks have been deleted succesfully"});
+    //     }
+    //     catch(error)
+    //     {
+    //         next(error);
+    //     }
+    // }
+    //        this.router.delete('/remove', this.deleteAllTasks);
