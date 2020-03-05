@@ -1,4 +1,4 @@
-# Node.JS API bu dummie for dummies.
+# Node.JS API by dummie for dummies.
 ## Typed in TypeScript using Express framework & Mongoose library.
 ##### The following blockquotes have the things that you don't need to check inside the repo:
 >Build folder that have the transpiled typescript code to javascript code, so if you are not a older java scripter probably will be so difficult to understand it, just ignore the content of this folder.
